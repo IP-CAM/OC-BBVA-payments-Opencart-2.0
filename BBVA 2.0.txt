@@ -1,0 +1,13 @@
+Novedades de BBVA 2.0:
+1) Resuelve los problemas de pedidos duplicados.
+2) Si el pago es denegado, se redirige al checkout, no a la página de success.
+3) Se definen todos los estados que devuelve la platforma BBVA (pago en proceso, aceptado, no procesado, denegado y anulado).
+4) Se envia una copia al propietario con el codigo de error y su descripción si el pago no es aceptado.
+
+---
+
+News of BBVA 2.0:
+1) Duplicate orders ID problems are solved.
+2) If the payment is denied, the customer is redirected to the checkout, not to the success page.
+3) New order states are defined: in proccess, accepted, not processed, denied and canceled
+4) An email of the order is sent to the owner with the error code and its description if the payment is not accepted

@@ -1,0 +1,35 @@
+Pasos para instalar este módulo:
+
+1) Sube los archivos que están en la carpeta upload al directorio raíz de opencart
+
+2) Entra en el panel de administración como administrador, vete a Extensions > Payment, e instala el módulo que se llama BBVA
+
+3) Pulsa sobre Edit en el módulo BBVA, y configura los datos correspondientes a tu cuenta del TPV de BBVA:
+- ID Merchant
+- Terminal
+- Secret Key (Esta es la clave de 8 caracteres. Hay otra clave, de 5 caracteres, que se usa para entrar al tpv virtual, y NO VA AQUI.).
+- Ofuscated keyword
+
+En la carpeta extra hay una imagen con una configuracion tipica del modulo
+
+4) En el panel de administracion, en Sistema, vete a propiedades. Edita tu tienda, y vete a la pestaña de Mail. Activa la opción "New Order Alert Mail".
+
+--- Opcional ---
+
+A) Si quieres que al recibir el correo de notificación de una nueva compra se añada la información del código de autorización (si el pago es acepetado),
+o el código de error (si el pago es denegado), lee el fichero Payment Mail.txt que está en la carpeta extra.
+
+B) Después de probar el modulo, ponle nota en
+http://www.opencart.com/index.php?route=extension/extension/info&extension_id=4309
+Si te ha sido de utilidad, y votas, puedes ayudar a otras personas a decidir probar el módulo :)
+
+--- Notas ---
+
+1) Sólo se sebreescribirá el archivo .htaccess
+Si no quieres sobreescribir el .htaccess, edita el .htaccess del directorio raíz de opencart y añade esta línea debajo de "RewriteEngine On"y "RewriteBase /":
+RewriteRule ^payment/bbva/callback index.php?route=payment/bbva/callback [L,QSA]
+
+2) Si tienes algún problema o sugerencia, puedes plantearla en el foro de opencart o en los comentarios de la extensión, pero os aconsejo mandarme una copia del mensaje a alberto.gdedios@ieee.org.
+No me llegan las notificaciones de comentarios nuevos de la extension, y a veces cuando reviso los comentarios han pasado semanas desde que lo habéis publicado.
+
+Gracias por utilizar esta extension

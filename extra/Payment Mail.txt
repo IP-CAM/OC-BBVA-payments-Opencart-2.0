@@ -1,0 +1,81 @@
+###############
+###         ###
+### ESPAÑOL ###
+###         ###
+###############
+
+Abre el archivo catalog/model/checkout/order.php, y busca donde pone
+
+// Admin Alert Mail
+
+Está sobre la línea 500. Encontrarás estas líneas:
+
+---
+// Text 
+$text  = $language->get('text_new_received') . "\n\n";
+$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
+$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
+$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
+$text .= $language->get('text_new_products') . "\n";
+---
+	
+Sustituyelas por estas:
+
+---
+// Text 
+$text  = $language->get('text_new_received') . "\n\n";
+$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
+$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
+$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
+
+if ($comment && $notify) {
+	$text .= $comment . "\n\n";
+}
+
+$text .= $language->get('text_new_products') . "\n";
+---
+
+
+Nota: Ajunto en la carpeta llamada "extra" el fichero order.php de la versión de opencart 1.5.4.1.
+Conviene que no copies y pegueis a menos que tengáis la version de Opencart 1.5.4 o 1.5.4.1, ya que es un fichero del core de Opencart, y puede cambiar de una versión a otra.
+
+
+###############
+###         ###
+### ENGLISH ###
+###         ###
+###############
+
+Open the file catalog/model/checkout/order.php, and search this text:
+// Admin Alert Mail
+It´s located in line 500 more or less. You´ll find theses lines:
+
+---
+// Text 
+$text  = $language->get('text_new_received') . "\n\n";
+$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
+$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
+$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
+$text .= $language->get('text_new_products') . "\n";
+---
+	
+Replace the lines by these ones:
+
+---
+// Text 
+$text  = $language->get('text_new_received') . "\n\n";
+$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
+$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
+$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
+
+if ($comment && $notify) {
+	$text .= $comment . "\n\n";
+}
+
+$text .= $language->get('text_new_products') . "\n";
+---
+
+
+Note: In the folder named "extra" there is a file order.php of opencart version 1.5.4.1 with this modification already done.
+Don´t copy & paste the file unless you have Opencart 1.5.4 or 1.5.4.1. This file is a core file, and can change from one version to another.
+When you update opencart, this change will be erased, so you´ll have to modify this file again.

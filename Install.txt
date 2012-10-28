@@ -1,0 +1,34 @@
+Install steps:
+
+1) Upload the files from the upload folder to opencart.
+
+2) Log into your admin account, go to Extensions > Payment, then install BBVA.
+
+3) Edit BBVA module and configure your BBVA account data:
+ID Merchant
+Terminal
+Secret Key (The length of the secret key is 8 chacters) 
+Ofuscated keyword
+
+There is an picture in the folder extra of a typical configuration
+
+4) Go to admin panel. In System, go to Settings. Edit your store, and go to Mail. Activate the option "New Order Alert Mail".
+
+--- Optional
+
+A) If you want to receive in the mail when a new order is created, the authorization code (if the payment is accepted), or the error code (if the payment is denied), read the file  Payment Mail.txt that is located in the folder named extra
+
+B) After using this module, vote the extensión in
+http://www.opencart.com/index.php?route=extension/extension/info&extension_id=4309
+. If you find it useful, and votes, you may help other people to decide to try this module :)
+
+Notes:
+1) Only .htaccess will be overwritten.
+If you don´t want to overwrite it, just add this line to the .htaccess in the root folder of opencart, under "RewriteEngine On", and "RewriteBase /":
+RewriteRule ^payment/bbva/callback index.php?route=payment/bbva/callback [L,QSA]
+
+2) If you have any problem or any suggestion, you can post it in opencart forum or you can post a comment in the extension webpage.
+But I advise you to send me a copy of the problem/suggestion to alberto.gdedios@ieee.org. I don´t receive notifications of new comments of the extension,
+and sometimes when I check the comments, someone has posted it some weeks ago.
+
+Thank you for using this extension
