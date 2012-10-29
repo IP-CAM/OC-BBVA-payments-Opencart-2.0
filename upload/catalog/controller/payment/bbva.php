@@ -175,22 +175,29 @@ class ControllerPaymentBBVA extends Controller {
 				
 				// Incluimos un comentario para el propietario:
 				// Si la operacion ha sido aceptada, ponemos el codigo de autorizacion. Si hay un error, ponemos el codigo de error y su descripcion
+				$accepted = ($order_status_id == $this->config->get('bbva_completed_status_id')) && ($response['coderror'] == 0);
+				$process_all_status = $this->config->get('bbva_process_only_completed_status') == 0;
 				$this->language->load('payment/bbva');
-				if( ($order_status_id == $this->config->get('bbva_completed_status_id')) && ($response['coderror'] == 0) ) {
-					$message  = $this->language->get('payment_accepted') . '. ';
-					$message .= $this->language->get('auth_code') . ' ' . $response['codautorizacion'] . '. ';
-					$message .= $this->language->get('amount') . ' ' . $response['importe'] . ' EUR';
+				
+				if($accepted) {
+					$message_for_store_owner  = $this->language->get('payment_accepted') . '. ';
+					$message_for_store_owner .= $this->language->get('auth_code') . ' ' . $response['codautorizacion'] . '. ';
+					$message_for_store_owner .= $this->language->get('amount') . ' ' . $response['importe'] . ' EUR';
 				} else {
 					include('err_array.php');
-					$message  = $this->language->get('payment_denied') . '. ';
-					$message .= $this->language->get('error') . ' ' . $response['coderror'] . ': ' . $err_array[$response['coderror']];
+					$message_for_store_owner  = $this->language->get('payment_denied') . '. ';
+					$message_for_store_owner .= $this->language->get('error') . ' ' . $response['coderror'] . ': ' . $err_array[$response['coderror']];
 				}
 				
 				// Asignamos/actualizamos el estado de la orden
 				if (!$order_info['order_status_id']) {
-					$this->model_checkout_order->confirm($order_id, $order_status_id, '', TRUE);
+					if($accepted || $process_all_status) {
+						$this->model_checkout_order->confirm($order_id, $order_status_id, '', $message_for_store_owner);
+					}
 				} else {
-					$this->model_checkout_order->update($order_id, $order_status_id, $message, TRUE);
+					if($accepted || $process_all_status) {
+						$this->model_checkout_order->update($order_id, $order_status_id, $message);
+					}
 				}
 			}
 	}

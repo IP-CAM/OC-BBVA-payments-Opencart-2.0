@@ -15,6 +15,37 @@
 		<h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
 		<div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
 	  </div>
+	  <script type="text/javascript">
+		window.onload=function(e) {
+			if('<?php echo $bbva_process_only_completed_status ?>' == 1) {
+				displayOrderStatus(1);
+			} else {
+				displayOrderStatus(0);
+			}
+		}
+		
+		function displayOrderStatus(enabled){
+			var denied = document.getElementById("denied_status");
+			var failed = document.getElementById("failed_status");
+			var pending = document.getElementById("pending_status");
+			var error = document.getElementById("error_status");
+			var cancel = document.getElementById("cancel_status");
+			
+			if (enabled == 1) {
+				denied.style.display = 'none';
+				failed.style.display = 'none';
+				pending.style.display = 'none';
+				error.style.display = 'none';
+				cancel.style.display = 'none';
+			} else {
+				denied.style.display = '';
+				failed.style.display = '';
+				pending.style.display = '';
+				error.style.display = '';
+				cancel.style.display = '';
+			}
+		}
+	</script>
 	<div class="content">
 		<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
 		  <div id="tab_general" class="page">
@@ -36,6 +67,18 @@
 				<td><input type="text" name="bbva_obfuscated" value="<?php echo $bbva_obfuscated; ?>" size="70" /></td>
 			  </tr>
 			  <tr>
+				<td><?php echo $entry_process_only_completed_status; ?></td>
+				<td><select name="bbva_process_only_completed_status" onchange="javascript:displayOrderStatus(this.options[this.selectedIndex].value)">
+					<?php if ($bbva_process_only_completed_status) { ?>
+					<option value="0"><?php echo $text_disabled; ?></option>
+					<option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+					<?php } else { ?>
+					<option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+					<option value="1"><?php echo $text_enabled; ?></option>
+					<?php } ?>
+				  </select></td>
+			  </tr>
+			  <tr>
 				<td><?php echo $entry_completed_status; ?></td>
 				<td><select name="bbva_completed_status_id">
 					<?php foreach ($order_statuses as $order_status) { ?>
@@ -47,7 +90,7 @@
 					<?php } ?>
 				  </select></td>
 			  </tr>
-			  <tr>
+			  <tr id="denied_status">
 				<td><?php echo $entry_denied_status; ?></td>
 				<td><select name="bbva_denied_status_id">
 					<?php foreach ($order_statuses as $order_status) { ?>
@@ -59,7 +102,7 @@
 					<?php } ?>
 				  </select></td>
 			  </tr>
-			  <tr>
+			  <tr id="failed_status">
 				<td><?php echo $entry_failed_status; ?></td>
 				<td><select name="bbva_failed_status_id">
 					<?php foreach ($order_statuses as $order_status) { ?>
@@ -71,7 +114,7 @@
 					<?php } ?>
 				  </select></td>
 			  </tr>
-			  <tr>
+			  <tr id="pending_status">
 				<td><?php echo $entry_pending_status; ?></td>
 				<td><select name="bbva_pending_status_id">
 					<?php foreach ($order_statuses as $order_status) { ?>
@@ -83,7 +126,7 @@
 					<?php } ?>
 				  </select></td>
 			  </tr>
-			  <tr>
+			  <tr id="error_status">
 				<td><?php echo $entry_error_status; ?></td>
 				<td><select name="bbva_error_status_id">
 					<?php foreach ($order_statuses as $order_status) { ?>
@@ -95,7 +138,7 @@
 					<?php } ?>
 				  </select></td>
 			  </tr>
-			  <tr>
+			  <tr id="cancel_status">
 				<td><?php echo $entry_cancel_status; ?></td>
 				<td><select name="bbva_cancel_status_id">
 					<?php foreach ($order_statuses as $order_status) { ?>

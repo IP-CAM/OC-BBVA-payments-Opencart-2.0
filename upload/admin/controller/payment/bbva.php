@@ -29,6 +29,7 @@ class ControllerPaymentBBVA extends Controller {
 		$this->data['entry_terminal'] = $this->language->get('entry_terminal');
 		$this->data['entry_clave'] = $this->language->get('entry_clave');
         $this->data['entry_obfuscated'] = $this->language->get('entry_obfuscated');
+		$this->data['entry_process_only_completed_status'] = $this->language->get('entry_process_only_completed_status');
 		$this->data['entry_completed_status'] = $this->language->get('entry_completed_status');
 		$this->data['entry_denied_status'] = $this->language->get('entry_denied_status');	
 		$this->data['entry_failed_status'] = $this->language->get('entry_failed_status');	
@@ -110,32 +111,48 @@ class ControllerPaymentBBVA extends Controller {
 			$this->data['bbva_completed_status_id'] = $this->config->get('bbva_completed_status_id');
 		}
 		
+		if (isset($this->request->post['bbva_process_only_completed_status'])) {
+			$this->data['bbva_process_only_completed_status'] = $this->request->post['bbva_process_only_completed_status'];
+		} else {
+			$this->data['bbva_process_only_completed_status'] = $this->config->get('bbva_process_only_completed_status');
+		}
+		
 		if (isset($this->request->post['bbva_pending_status_id'])) {
 			$this->data['bbva_pending_status_id'] = $this->request->post['bbva_pending_status_id'];
+		} elseif($this->config->get('bbva_process_only_completed_status') == 1) {
+			$this->data['bbva_pending_status_id'] = '';
 		} else {
 			$this->data['bbva_pending_status_id'] = $this->config->get('bbva_pending_status_id');
 		}
 		
 		if (isset($this->request->post['bbva_denied_status_id'])) {
 			$this->data['bbva_denied_status_id'] = $this->request->post['bbva_denied_status_id'];
+		} elseif($this->config->get('bbva_process_only_completed_status') == 1) {
+			$this->data['bbva_pending_status_id'] = '';
 		} else {
 			$this->data['bbva_denied_status_id'] = $this->config->get('bbva_denied_status_id');
 		}
 		
 		if (isset($this->request->post['bbva_failed_status_id'])) {
 			$this->data['bbva_failed_status_id'] = $this->request->post['bbva_failed_status_id'];
+		} elseif($this->config->get('bbva_process_only_completed_status') == 1) {
+			$this->data['bbva_pending_status_id'] = '';
 		} else {
 			$this->data['bbva_failed_status_id'] = $this->config->get('bbva_failed_status_id');
 		} 
 		
 		if (isset($this->request->post['bbva_cancel_status_id'])) {
 			$this->data['bbva_cancel_status_id'] = $this->request->post['bbva_cancel_status_id'];
+		} elseif($this->config->get('bbva_process_only_completed_status') == 1) {
+			$this->data['bbva_pending_status_id'] = '';
 		} else {
 			$this->data['bbva_cancel_status_id'] = $this->config->get('bbva_cancel_status_id');
 		}
 
 		if (isset($this->request->post['bbva_error_status_id'])) {
 			$this->data['bbva_error_status_id'] = $this->request->post['bbva_error_status_id'];
+		} elseif($this->config->get('bbva_process_only_completed_status') == 1) {
+			$this->data['bbva_pending_status_id'] = '';
 		} else {
 			$this->data['bbva_error_status_id'] = $this->config->get('bbva_error_status_id');
 		} 
